@@ -9,8 +9,12 @@
 #include <SPI.h>
 #include <Time.h>
 
-// Option 1: use any pins but a little slower
 Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, mosi, sclk, rst);  
+
+int color_bg  = setColor(0x060B0F);
+int color_bin = setColor(0xE8EDDF);
+int color_int = setColor(0x143E51);
+int color_per = setColor(0x001723);
 
 void setup() {
 //  setTime(17, 21, 30, 19, 4, 2015); 
@@ -20,7 +24,7 @@ void setup() {
   tft.begin();
   
   tft.setTextSize(1);
-  tft.fillScreen(hex("0001"));
+  tft.fillScreen(color_bg);
 }
 
 tmElements_t tm;
@@ -102,41 +106,41 @@ void setCurrentTime() {
 }
 
 void printHour(int h) {
-  tft.fillRect(20, 15, 98, 12, hex("0001"));
+  tft.fillRect(20, 15, 98, 12, color_bg);
   tft.setCursor(10, 15);
-  tft.setTextColor(hex("3330"));
+  tft.setTextColor(color_int);
   tft.print("h ");
   printBin(h);
   printInt(h);
 }
 
 void printMin(int m) {
-  tft.fillRect(20, 35, 98, 12, hex("0001"));
+  tft.fillRect(20, 35, 98, 12, color_bg);
   tft.setCursor(10, 35);
-  tft.setTextColor(hex("3330"));
+  tft.setTextColor(color_int);
   tft.print("m ");
   printBin(m);
   printInt(m);
 }
 
 void printSec(int s) {
-  tft.fillRect(20, 55, 98, 12, hex("0001"));
+  tft.fillRect(20, 55, 98, 12, color_bg);
   tft.setCursor(10, 55);
-  tft.setTextColor(hex("3330"));
+  tft.setTextColor(color_int);
   tft.print("s ");
   printBin(s);
   printInt(s);
 }
 
 void printPeriod(String p) {
-  tft.fillRect(20, 75, 98, 12, hex("0001"));
+  tft.fillRect(20, 75, 98, 12, color_bg);
   tft.setCursor(10, 75);
-  tft.setTextColor(hex("1105"));
+  tft.setTextColor(color_per);
   tft.print(p);
 }
 
 void printBin(int n) {
-  tft.setTextColor(hex("ffff"));
+  tft.setTextColor(color_bin);
   if (n < 2)   tft.print(0);
   if (n < 4)   tft.print(0);
   if (n < 8)   tft.print(0);
@@ -150,34 +154,16 @@ void printBin(int n) {
 }
 
 void printInt(int n) {
-  tft.setTextColor(hex("1105"));
+  tft.setTextColor(color_per);
   tft.print(" (");
   if (n < 10) tft.print(0);
   tft.print(n);
   tft.print(")");
 }
 
-int hex(char *s) {
-  int x = 0;
-  
-  for(;;) {
-    char c = *s;
-    
-    if (c >= '0' && c <= '9') {
-      x *= 16;
-      x += c - '0'; 
-    } else if (c >= 'A' && c <= 'F') {
-      x *= 16;
-      x += (c - 'A') + 10; 
-    } else if (c >= 'a' && c <= 'f') {
-      x *= 16;
-      x += (c - 'a') + 10;
-    } else {
-      break;
-    }
-    
-    s++;
-  }
-  
-  return x;
+int setColor(unsigned long color) {
+  byte r = (color >> 16) & 0xFF;
+  byte g = (color >> 8) & 0xFF;
+  byte b = color & 0xFF;
+  return (int) ((r / 8) << 11) | ((g / 4) << 5) | (b / 8);
 }
