@@ -17,7 +17,6 @@ int color_int = setColor(0x143E51);
 int color_per = setColor(0x001723);
 
 void setup() {
-//  setTime(17, 21, 30, 19, 4, 2015); 
   setCurrentTime();
   
   Serial.begin(9600);
