@@ -11,10 +11,19 @@
 
 Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, mosi, sclk, rst);  
 
-int color_bg  = setColor(0x060B0F);
-int color_bin = setColor(0xE8EDDF);
-int color_int = setColor(0x143E51);
-int color_per = setColor(0x001723);
+int color_primary    = setColor(0xDAFFE7);
+int color_secondary  = setColor(0x28AFB0);
+int color_tertiary   = setColor(0x0A2239);
+int color_quaternary = setColor(0x040B0D);
+
+int last_h;
+int last_m;
+int last_s;
+
+String p;
+String last_p;
+
+tmElements_t tm;
 
 void setup() {
   setCurrentTime();
@@ -23,15 +32,8 @@ void setup() {
   tft.begin();
   
   tft.setTextSize(1);
-  tft.fillScreen(color_bg);
+  tft.fillScreen(color_quaternary);
 }
-
-tmElements_t tm;
-int last_h;
-int last_m;
-int last_s;
-String p;
-String last_p;
 
 void loop() {
   time_t t = now();
@@ -105,55 +107,55 @@ void setCurrentTime() {
 }
 
 void printHour(int h) {
-  tft.fillRect(20, 15, 98, 12, color_bg);
+  tft.fillRect(20, 15, 98, 12, color_quaternary);
   tft.setCursor(10, 15);
-  tft.setTextColor(color_int);
+  tft.setTextColor(color_secondary);
   tft.print("h ");
   printBin(h);
   printInt(h);
 }
 
 void printMin(int m) {
-  tft.fillRect(20, 35, 98, 12, color_bg);
+  tft.fillRect(20, 35, 98, 12, color_quaternary);
   tft.setCursor(10, 35);
-  tft.setTextColor(color_int);
+  tft.setTextColor(color_secondary);
   tft.print("m ");
   printBin(m);
   printInt(m);
 }
 
 void printSec(int s) {
-  tft.fillRect(20, 55, 98, 12, color_bg);
+  tft.fillRect(20, 55, 98, 12, color_quaternary);
   tft.setCursor(10, 55);
-  tft.setTextColor(color_int);
+  tft.setTextColor(color_secondary);
   tft.print("s ");
   printBin(s);
   printInt(s);
 }
 
 void printPeriod(String p) {
-  tft.fillRect(20, 75, 98, 12, color_bg);
+  tft.fillRect(20, 75, 98, 12, color_quaternary);
   tft.setCursor(10, 75);
-  tft.setTextColor(color_per);
+  tft.setTextColor(color_tertiary);
   tft.print(p);
 }
 
 void printBin(int n) {
-  tft.setTextColor(color_bin);
+  tft.setTextColor(color_primary);
   if (n < 2)   tft.print(0);
   if (n < 4)   tft.print(0);
   if (n < 8)   tft.print(0);
   if (n < 16)  tft.print(0);
   if (n < 32)  tft.print(0);
-//  if (n < 64)  tft.print(0);
-//  if (n < 128) tft.print(0);
-//  if (n < 256) tft.print(0);
-//  if (n < 512) tft.print(0);
+  if (n < 64)  tft.print(0);
+  if (n < 128) tft.print(0);
+  if (n < 256) tft.print(0);
+  if (n < 512) tft.print(0);
   tft.print(n, BIN);
 }
 
 void printInt(int n) {
-  tft.setTextColor(color_per);
+  tft.setTextColor(color_tertiary);
   tft.print(" (");
   if (n < 10) tft.print(0);
   tft.print(n);
