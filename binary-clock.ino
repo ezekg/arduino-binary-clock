@@ -147,10 +147,10 @@ void printBin(int n) {
   if (n < 8)   tft.print(0);
   if (n < 16)  tft.print(0);
   if (n < 32)  tft.print(0);
-  if (n < 64)  tft.print(0);
-  if (n < 128) tft.print(0);
-  if (n < 256) tft.print(0);
-  if (n < 512) tft.print(0);
+//  if (n < 64)  tft.print(0);
+//  if (n < 128) tft.print(0);
+//  if (n < 256) tft.print(0);
+//  if (n < 512) tft.print(0);
   tft.print(n, BIN);
 }
 
