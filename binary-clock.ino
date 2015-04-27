@@ -96,10 +96,10 @@ void setCurrentTime() {
     return;
   }
   
-  tm.Day = d_;
-  tm.Month = mo_index + 1;
-  tm.Year = CalendarYrToTm(y_);
-  tm.Hour = h_;
+  tm.Day    = d_;
+  tm.Month  = mo_index + 1;
+  tm.Year   = CalendarYrToTm(y_);
+  tm.Hour   = h_;
   tm.Minute = m_;
   tm.Second = s_;
   
