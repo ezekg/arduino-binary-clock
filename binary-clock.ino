@@ -11,10 +11,10 @@
 
 Adafruit_SSD1351 tft = Adafruit_SSD1351(cs, dc, mosi, sclk, rst);  
 
-int color_primary    = setColor(0xDAFFE7);
-int color_secondary  = setColor(0x28AFB0);
-int color_tertiary   = setColor(0x0A2239);
-int color_quaternary = setColor(0x040B0D);
+int color_primary    = hex32to16(0xDAFFE7);
+int color_secondary  = hex32to16(0x28AFB0);
+int color_tertiary   = hex32to16(0x0A2239);
+int color_quaternary = hex32to16(0x040B0D);
 
 int last_h;
 int last_m;
@@ -162,7 +162,7 @@ void printInt(int n) {
   tft.print(")");
 }
 
-int setColor(unsigned long color) {
+int hex32to16(unsigned long color) {
   byte r = (color >> 16) & 0xFF;
   byte g = (color >> 8) & 0xFF;
   byte b = color & 0xFF;
